@@ -4,9 +4,23 @@
 [![Expo](https://img.shields.io/badge/Expo-SDK%2056-000020?logo=expo&logoColor=white)](https://expo.dev)
 [![Platforms](https://img.shields.io/badge/platforms-Android%20%7C%20iOS-3DDC84)](#)
 
-A pattern-puzzle mobile game built with **React Native (Expo)** and [HeroUI Native](https://github.com/heroui-inc/heroui-native). Players study a few input → output examples, work out the hidden rule, and solve for the missing value.
+🧠 An **open-source pattern-logic brain game** built with **React Native**, **Expo** & [HeroUI Native](https://github.com/heroui-inc/heroui-native). Study the examples, spot the hidden rule, and solve for the missing number.
 
 Open source under the [MIT License](#license) — contributions welcome.
+
+## Screenshots
+
+### ☀️ Light
+
+| Home | Levels | Puzzle | How to Play | Settings |
+|:---:|:---:|:---:|:---:|:---:|
+| <img src="./assets/screenshots/light_one.png" alt="Home" width="160"/> | <img src="./assets/screenshots/light_all_levels.png" alt="Levels" width="160"/> | <img src="./assets/screenshots/light_level.png" alt="Puzzle" width="160"/> | <img src="./assets/screenshots/light_how_to_play.png" alt="How to Play" width="160"/> | <img src="./assets/screenshots/light_settings.png" alt="Settings" width="160"/> |
+
+### 🌙 Dark
+
+| Home | Levels | Puzzle | Result | Settings |
+|:---:|:---:|:---:|:---:|:---:|
+| <img src="./assets/screenshots/dark_one.png" alt="Home" width="160"/> | <img src="./assets/screenshots/dark_all_levels.png" alt="Levels" width="160"/> | <img src="./assets/screenshots/dark_level.png" alt="Puzzle" width="160"/> | <img src="./assets/screenshots/dark_awards.png" alt="Result" width="160"/> | <img src="./assets/screenshots/dark_settings.png" alt="Settings" width="160"/> |
 
 ## Features
 
