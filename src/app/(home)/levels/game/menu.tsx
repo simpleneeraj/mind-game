@@ -1,9 +1,6 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Icon } from '@/src/components/icons';
 import { Button, Menu } from 'heroui-native';
 import React from 'react';
-import { withUniwind } from 'uniwind';
-
-const StyledIonicons = withUniwind(Ionicons);
 
 type GameMenuProps = {
   onRestart?: () => void;
@@ -21,8 +18,7 @@ const GameMenu: React.FC<GameMenuProps> = ({
     <Menu>
       <Menu.Trigger asChild>
         <Button isIconOnly size="sm" variant="ghost" className="rounded-full">
-          <StyledIonicons
-            name="ellipsis-vertical"
+          <Icon.Menu
             size={18}
             className="text-muted"
           />
@@ -33,8 +29,7 @@ const GameMenu: React.FC<GameMenuProps> = ({
         <Menu.Overlay />
         <Menu.Content presentation="popover" width={200}>
           <Menu.Item onPress={onRestart}>
-            <StyledIonicons
-              name="refresh"
+            <Icon.Refresh
               size={18}
               className="text-default-foreground"
             />
@@ -42,8 +37,7 @@ const GameMenu: React.FC<GameMenuProps> = ({
           </Menu.Item>
 
           <Menu.Item onPress={onHowToPlay}>
-            <StyledIonicons
-              name="help-circle-outline"
+            <Icon.Question
               size={18}
               className="text-default-foreground"
             />
@@ -51,7 +45,7 @@ const GameMenu: React.FC<GameMenuProps> = ({
           </Menu.Item>
 
           <Menu.Item variant="danger" onPress={onQuit}>
-            <StyledIonicons name="exit-outline" size={18} className="text-danger" />
+            <Icon.Exit size={18} className="text-danger" />
             <Menu.ItemTitle>Quit</Menu.ItemTitle>
           </Menu.Item>
         </Menu.Content>

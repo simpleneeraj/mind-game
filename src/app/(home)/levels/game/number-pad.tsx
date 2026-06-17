@@ -1,11 +1,7 @@
-import SolarLightbulbBoldDuotoneIcon from '@/src/components/icons/SolarLightbulbBoldDuotoneIcon';
-import { Ionicons } from '@expo/vector-icons';
+import { Icon } from '@/src/components/icons';
 import { Button, cn } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
-import { withUniwind } from 'uniwind';
-
-const StyledIonicons = withUniwind(Ionicons);
 
 type ControlsProps = {
   value?: string;
@@ -62,9 +58,9 @@ const Controls: React.FC<ControlsProps> = React.memo(
             isDisabled={hintUsed || disabled}
             className={KEY_CLASS}
           >
-            <SolarLightbulbBoldDuotoneIcon
+            <Icon.Lightbulb
+              size={24}
               className={cn(
-                'size-6',
                 hintUsed ? 'text-default-foreground/30' : 'text-warning'
               )}
             />
@@ -83,8 +79,7 @@ const Controls: React.FC<ControlsProps> = React.memo(
             onPress={onBackspace}
             className={KEY_CLASS}
           >
-            <StyledIonicons
-              name="backspace-outline"
+            <Icon.Backspace
               size={22}
               className="text-default-foreground"
             />

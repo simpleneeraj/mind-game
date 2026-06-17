@@ -13,7 +13,8 @@ import Animated, { FadeInDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const LevelSelect: React.FC = () => {
-  const { ROW_GAP, COLUMN_GAP, NUM_COLUMNS, HORIZONTAL_PADDING } = LEVELS_CONFIG;
+  const { ROW_GAP, COLUMN_GAP, NUM_COLUMNS, HORIZONTAL_PADDING } =
+    LEVELS_CONFIG;
 
   const router = useRouter();
   const insets = useSafeAreaInsets();
@@ -34,7 +35,7 @@ const LevelSelect: React.FC = () => {
         const id = idx + 1;
         return { id, locked: !isUnlocked(id), stars: starsFor(id) };
       }),
-    [isUnlocked, starsFor]
+    [isUnlocked, starsFor],
   );
 
   return (
@@ -50,7 +51,7 @@ const LevelSelect: React.FC = () => {
         columnWrapperStyle={{ gap: COLUMN_GAP, marginBottom: ROW_GAP }}
         contentContainerStyle={{ paddingBottom: insets.bottom + 16 }}
         ListHeaderComponent={
-          <View className="mb-4 mt-3 flex-row items-center justify-between rounded-2xl bg-surface/60 px-4 py-3">
+          <View className="mb-4 mt-3 flex-row items-center justify-between rounded-2xl bg-default px-4 py-3">
             <View>
               <AppText className="text-xs text-muted">Completed</AppText>
               <AppText className="font-mono-medium text-lg text-default-foreground">

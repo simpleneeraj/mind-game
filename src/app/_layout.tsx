@@ -40,6 +40,10 @@ import {
   KeyboardAvoidingView,
   KeyboardProvider,
 } from 'react-native-keyboard-controller';
+import {
+  SafeAreaProvider,
+  initialWindowMetrics,
+} from 'react-native-safe-area-context';
 import '../../global.css';
 import { AppThemeProvider } from '../contexts/app-theme-context';
 
@@ -68,7 +72,7 @@ function AppContent() {
         {children}
       </KeyboardAvoidingView>
     ),
-    []
+    [],
   );
 
   return (
@@ -122,9 +126,11 @@ export default function Layout() {
 
   return (
     <GestureHandlerRootView style={styles.root}>
-      <KeyboardProvider>
-        <AppContent />
-      </KeyboardProvider>
+      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+        <KeyboardProvider>
+          <AppContent />
+        </KeyboardProvider>
+      </SafeAreaProvider>
     </GestureHandlerRootView>
   );
 }

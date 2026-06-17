@@ -1,22 +1,26 @@
 import { AppText } from '@/src/components/app-text';
-import SolarLightbulbBoldDuotoneIcon from '@/src/components/icons/SolarLightbulbBoldDuotoneIcon';
+import { Icon } from '@/src/components/icons';
 import { RatingStars } from '@/src/components/levels/rating-stars';
 import { ThemeToggle } from '@/src/components/theme-toggle';
 import { useAppTheme } from '@/src/contexts/app-theme-context';
 import { TOTAL_LEVELS } from '@/src/data/puzzles';
 import { useHaptics } from '@/src/helpers/hooks/use-haptics';
 import { useProgress } from '@/src/store/hooks/use-progress';
-import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { Button, PressableFeedback, useThemeColor } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { withUniwind } from 'uniwind';
 
-const StyledIonicons = withUniwind(Ionicons);
+const getDailyLevel = () => {
+  const start = new Date(new Date().getFullYear(), 0, 0).getTime();
+  const day = Math.floor((Date.now() - start) / 86_400_000);
+  return (day % TOTAL_LEVELS) + 1;
+};
+
+const DAILY_LEVEL = getDailyLevel();
 
 export default function Start() {
   const router = useRouter();
@@ -24,12 +28,6 @@ export default function Start() {
   const { tap } = useHaptics();
   const { totalStars, completedCount, nextLevel, hasStarted } = useProgress();
   const [accent] = useThemeColor(['accent']);
-
-  const dailyLevel = React.useMemo(() => {
-    const start = new Date(new Date().getFullYear(), 0, 0).getTime();
-    const day = Math.floor((Date.now() - start) / 86_400_000);
-    return (day % TOTAL_LEVELS) + 1;
-  }, []);
 
   const go = (path: string) => {
     tap();
@@ -40,7 +38,14 @@ export default function Start() {
     <View className="flex-1 bg-background">
       <LinearGradient
         colors={[accent, 'transparent']}
-        style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '55%', opacity: isDark ? 0.16 : 0.12 }}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: '55%',
+          opacity: isDark ? 0.16 : 0.12,
+        }}
       />
 
       <SafeAreaView edges={['top', 'bottom']} style={{ flex: 1 }}>
@@ -50,8 +55,7 @@ export default function Start() {
             onPress={() => go('/settings')}
             className="rounded-full p-2"
           >
-            <StyledIonicons
-              name="settings-outline"
+            <Icon.Settings
               size={20}
               className="text-foreground"
             />
@@ -65,7 +69,7 @@ export default function Start() {
           className="flex-1 items-center justify-center gap-3 px-6"
         >
           <View className="size-20 items-center justify-center rounded-3xl bg-accent/15">
-            <SolarLightbulbBoldDuotoneIcon className="size-11 text-accent" />
+            <Icon.Lightbulb size={44} className="text-accent" />
           </View>
           <AppText
             maxFontSizeMultiplier={1.2}
@@ -120,11 +124,10 @@ export default function Start() {
             </Button>
             <Button
               variant="secondary"
-              onPress={() => go(`/levels/game/${String(dailyLevel)}`)}
+              onPress={() => go(`/levels/game/${String(DAILY_LEVEL)}`)}
               className="h-12 flex-1 rounded-2xl"
             >
-              <StyledIonicons
-                name="calendar-outline"
+              <Icon.Calendar
                 size={16}
                 className="text-foreground"
               />

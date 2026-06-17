@@ -1,11 +1,10 @@
 import { AppText } from '@/src/components/app-text';
-import SolarLightbulbBoldDuotoneIcon from '@/src/components/icons/SolarLightbulbBoldDuotoneIcon';
+import { Icon } from '@/src/components/icons';
 import SafeScreenView from '@/src/components/views/safe-screen';
 import { LEVELS_CONFIG } from '@/src/constants';
 import { computeStars, getPuzzle } from '@/src/data/puzzles';
 import { useHaptics } from '@/src/helpers/hooks/use-haptics';
 import { useProgress } from '@/src/store/hooks/use-progress';
-import { Ionicons } from '@expo/vector-icons';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { cn, Surface, useToast } from 'heroui-native';
 import React, { useState } from 'react';
@@ -17,11 +16,8 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import { withUniwind } from 'uniwind';
 import GameMenu from './menu';
 import Controls from './number-pad';
-
-const StyledIonicons = withUniwind(Ionicons);
 
 const MAX_ANSWER_LENGTH = 6;
 type Status = 'idle' | 'correct' | 'wrong';
@@ -48,7 +44,7 @@ const Equation: React.FC<{
       >
         {input}
       </AppText>
-      <StyledIonicons name="arrow-forward" size={20} className="text-muted" />
+      <Icon.ArrowRight size={20} className="text-muted" />
       <AppText
         maxFontSizeMultiplier={1.1}
         className={cn('font-mono-bold text-3xl', toneClass)}
@@ -76,7 +72,11 @@ const Game: React.FC = () => {
   const hintUsedRef = React.useRef(false);
   const [hintUsed, setHintUsed] = useState(false);
   const wrongAttemptsRef = React.useRef(0);
-  const startedAtRef = React.useRef(Date.now());
+  const startedAtRef = React.useRef(0);
+
+  React.useEffect(() => {
+    startedAtRef.current = Date.now();
+  }, []);
 
   const shakeX = useSharedValue(0);
   const popScale = useSharedValue(1);
@@ -100,6 +100,7 @@ const Game: React.FC = () => {
     if (Number(answer) === puzzle.answer) {
       success();
       setStatus('correct');
+      // eslint-disable-next-line react-hooks/immutability
       popScale.value = withSequence(
         withSpring(1.25, { damping: 6 }),
         withSpring(1)
@@ -125,6 +126,7 @@ const Game: React.FC = () => {
       error();
       wrongAttemptsRef.current += 1;
       setStatus('wrong');
+      // eslint-disable-next-line react-hooks/immutability
       shakeX.value = withSequence(
         withTiming(-8, { duration: 50 }),
         withTiming(8, { duration: 80 }),
@@ -147,7 +149,7 @@ const Game: React.FC = () => {
       variant: 'success',
       label: 'Hint unlocked',
       description: puzzle.hint,
-      icon: <SolarLightbulbBoldDuotoneIcon className="size-8 text-success" />,
+      icon: <Icon.Lightbulb size={32} className="text-success" />,
       actionLabel: 'Got it',
       duration: 6000,
       onActionPress: ({ hide }) => hide(),

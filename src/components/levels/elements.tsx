@@ -1,5 +1,5 @@
 import { AppText } from '@/src/components/app-text';
-import SolarLockBoldDuotoneIcon from '@/src/components/icons/SolarLockBoldDuotoneIcon';
+import { Icon } from '@/src/components/icons';
 import { cn, PressableFeedback, Surface } from 'heroui-native';
 import React from 'react';
 import { View } from 'react-native';
@@ -28,20 +28,20 @@ export const LevelItem: React.FC<LevelItemProps> = React.memo(
         <Surface
           style={{ height: width }}
           className={cn(
-            'items-center justify-center gap-2 rounded-3xl border border-transparent bg-surface/60',
+            'items-center justify-center gap-2 rounded-3xl border border-transparent bg-surface',
             current && 'border-2 border-accent bg-accent/5',
-            locked && 'opacity-40'
+            // locked && 'opacity-40',
           )}
         >
           {locked ? (
-            <SolarLockBoldDuotoneIcon className="size-7 text-default-foreground/60" />
+            <Icon.Lock size={28} className="text-default-foreground/60" />
           ) : (
             <>
               <AppText
                 maxFontSizeMultiplier={1.3}
                 className={cn(
                   'font-mono-bold text-2xl',
-                  current ? 'text-accent' : 'text-default-foreground'
+                  current ? 'text-accent' : 'text-default-foreground',
                 )}
               >
                 {id}
@@ -62,7 +62,7 @@ export const LevelItem: React.FC<LevelItemProps> = React.memo(
         )}
       </PressableFeedback>
     );
-  }
+  },
 );
 
 LevelItem.displayName = 'LevelItem';

@@ -55,14 +55,6 @@ const LevelComplete: React.FC = () => {
   const scale = useSharedValue(0.9);
   const opacity = useSharedValue(0);
 
-  React.useEffect(() => {
-    scale.value = withTiming(1, { duration: 420 });
-    opacity.value = withTiming(1, { duration: 420 }, (finished) => {
-      if (finished) scheduleOnRN(announceForA11y);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const announceForA11y = () => {
     AccessibilityInfo.isScreenReaderEnabled().then((enabled) => {
       if (enabled) {
@@ -72,6 +64,14 @@ const LevelComplete: React.FC = () => {
       }
     });
   };
+
+  React.useEffect(() => {
+    scale.value = withTiming(1, { duration: 420 });
+    opacity.value = withTiming(1, { duration: 420 }, (finished) => {
+      if (finished) scheduleOnRN(announceForA11y);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const containerStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],

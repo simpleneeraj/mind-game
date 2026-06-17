@@ -4,7 +4,8 @@ import { StatusBar } from 'expo-status-bar';
 import * as SystemUI from 'expo-system-ui';
 import { useThemeColor } from 'heroui-native';
 import React from 'react';
-import { Platform, View } from 'react-native';
+import { Platform } from 'react-native';
+import { AppHeader } from '../../components/views/app-header';
 import { ThemeToggle } from '../../components/theme-toggle';
 import { useAppTheme } from '../../contexts/app-theme-context';
 
@@ -13,7 +14,7 @@ const WINDOW_BG = { light: '#FAF9F5', dark: '#262624' } as const;
 
 export default function Layout() {
   const { isDark } = useAppTheme();
-  const [foreground, background] = useThemeColor(['foreground', 'background']);
+  const [background] = useThemeColor(['background']);
 
   // Paint the OS window + Android nav bar to match the theme so the system
   // bars don't show the default white/grey (especially in dark mode).
@@ -30,16 +31,11 @@ export default function Layout() {
   }, [isDark]);
 
   return (
-    <View className="flex-1 bg-background">
+    <>
       <StatusBar style={isDark ? 'light' : 'dark'} />
       <Stack
         screenOptions={{
-          headerTitleAlign: 'center',
-          headerShadowVisible: false,
-          headerStyle: { backgroundColor: background },
-          headerTintColor: foreground,
-          headerTitleStyle: { fontFamily: 'Alice_400Regular', fontSize: 18 },
-          headerBackButtonDisplayMode: 'minimal',
+          header: (props) => <AppHeader {...props} />,
           contentStyle: { backgroundColor: background },
         }}
       >
@@ -59,6 +55,6 @@ export default function Layout() {
           options={{ title: 'How to Play', presentation: 'modal' }}
         />
       </Stack>
-    </View>
+    </>
   );
 }

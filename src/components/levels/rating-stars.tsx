@@ -1,4 +1,4 @@
-import SolarStarBoldDuotoneIcon from '@/src/components/icons/SolarStarBoldDuotoneIcon';
+import { Icon } from '@/src/components/icons';
 import { cn } from 'heroui-native';
 import React from 'react';
 import { Animated, View } from 'react-native';
@@ -26,9 +26,9 @@ export const RatingStars: React.FC<RatingStarsProps> = ({
   starClassName = 'size-4',
   className,
 }) => {
-  const anims = React.useRef(
+  const [anims] = React.useState(() =>
     Array.from({ length: count }).map(() => new Animated.Value(animated ? 0.2 : 1))
-  ).current;
+  );
 
   React.useEffect(() => {
     if (!animated) return;
@@ -95,7 +95,7 @@ export const RatingStars: React.FC<RatingStarsProps> = ({
 
         return (
           <Animated.View key={i} style={style}>
-            <SolarStarBoldDuotoneIcon
+            <Icon.Star
               className={cn(
                 starClassName,
                 i < filled ? 'text-amber-500' : 'text-default-foreground/30'
