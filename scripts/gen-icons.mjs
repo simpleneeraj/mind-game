@@ -1,10 +1,12 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
+import { Buffer } from 'node:buffer';
 import satori from 'satori';
 import { Resvg } from '@resvg/resvg-js';
 
-// 1. Load Font (Alice)
+// satori always requires a font, even when we render no text.
 console.log('Fetching Alice font...');
-const ALICE_TTF = 'https://raw.githubusercontent.com/google/fonts/main/ofl/alice/Alice-Regular.ttf';
+const ALICE_TTF =
+  'https://raw.githubusercontent.com/google/fonts/main/ofl/alice/Alice-Regular.ttf';
 const fontResponse = await fetch(ALICE_TTF);
 if (!fontResponse.ok) {
   throw new Error(`Failed to fetch font: ${fontResponse.statusText}`);
@@ -12,35 +14,29 @@ if (!fontResponse.ok) {
 const fontData = await fontResponse.arrayBuffer();
 const fonts = [{ name: 'Alice', data: fontData, weight: 400, style: 'normal' }];
 
-// Premium Sunset Clay Palette
-const CLAY_LIGHT = '#D46A43'; // Warm sunset orange-clay
-const CLAY_DARK = '#5D2A18';  // Deep rich terracotta/burnt umber
-const IVORY = '#FAF9F5';      // Elegant off-white cream
+// Goodreads-inspired palette — warm cream + dark brown. Flat, no gradients.
+const CREAM = '#F4F1EA'; // Goodreads tan/cream background
+const BROWN = '#382110'; // Goodreads dark brown
 
-/**
- * Render to PNG Buffer using Satori and Resvg
- */
+// Bold lightbulb glyph — the app's motif for "spot the hidden pattern".
+const BULB_PATH =
+  'M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7zm-3 18c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1z';
+
+const bulbDataUri = (color) => {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="${color}" d="${BULB_PATH}"/></svg>`;
+  return `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`;
+};
+
+/** Render a satori element tree to a PNG Buffer. */
 async function renderPNG(element, width, height) {
-  const svg = await satori(element, {
-    width,
-    height,
-    fonts,
-  });
-  const resvg = new Resvg(svg, {
-    fitTo: {
-      mode: 'width',
-      value: width,
-    },
-  });
-  const pngData = resvg.render();
-  return pngData.asPng();
+  const svg = await satori(element, { width, height, fonts });
+  const resvg = new Resvg(svg, { fitTo: { mode: 'width', value: width } });
+  return resvg.render().asPng();
 }
 
-/**
- * Generates a full composite icon (gradient background + glass overlay + 'm')
- */
-async function generateFullIcon(px, { char = 'm' } = {}) {
-  const element = {
+/** A centered lightbulb on a (optionally transparent) flat background. */
+function canvas(px, { background = 'transparent', color = BROWN, scale = 0.52 } = {}) {
+  return {
     type: 'div',
     props: {
       style: {
@@ -49,145 +45,41 @@ async function generateFullIcon(px, { char = 'm' } = {}) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: `linear-gradient(135deg, ${CLAY_LIGHT}, ${CLAY_DARK})`,
-        padding: `${Math.round(px * 0.08)}px`,
+        background,
       },
       children: {
-        type: 'div',
+        type: 'img',
         props: {
-          style: {
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            border: `${Math.round(px * 0.012)}px solid rgba(250, 249, 245, 0.15)`,
-            borderRadius: `${Math.round(px * 0.18)}px`,
-            background: 'rgba(250, 249, 245, 0.03)',
-          },
-          children: {
-            type: 'div',
-            props: {
-              style: {
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '60%',
-                height: '60%',
-                borderRadius: '50%',
-                background: 'rgba(250, 249, 245, 0.05)',
-                border: `${Math.round(px * 0.002)}px solid rgba(250, 249, 245, 0.05)`,
-              },
-              children: {
-                type: 'div',
-                props: {
-                  style: {
-                    color: IVORY,
-                    fontFamily: 'Alice',
-                    fontSize: Math.round(px * 0.32),
-                    fontWeight: 400,
-                    lineHeight: 1,
-                    marginTop: -Math.round(px * 0.02),
-                  },
-                  children: char,
-                },
-              },
-            },
-          },
+          src: bulbDataUri(color),
+          width: Math.round(px * scale),
+          height: Math.round(px * scale),
         },
       },
     },
   };
-  return await renderPNG(element, px, px);
 }
 
-/**
- * Generates the background layer (clay gradient) for adaptive icons
- */
+/** Full app icon: flat cream background + brown lightbulb. */
+async function generateFullIcon(px) {
+  return renderPNG(canvas(px, { background: CREAM, color: BROWN, scale: 0.52 }), px, px);
+}
+
+/** Adaptive background layer (flat cream). */
 async function generateBackground(px) {
   const element = {
     type: 'div',
-    props: {
-      style: {
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        background: `linear-gradient(135deg, ${CLAY_LIGHT}, ${CLAY_DARK})`,
-      },
-    },
+    props: { style: { width: '100%', height: '100%', display: 'flex', background: CREAM } },
   };
-  return await renderPNG(element, px, px);
+  return renderPNG(element, px, px);
 }
 
 /**
- * Generates the foreground layer (glass squircle + 'm') for adaptive icons
+ * Adaptive foreground layer (transparent + brown bulb).
+ * Kept inside the center ~66% safe zone Android may crop to.
  */
 async function generateForeground(px, { monochrome = false } = {}) {
-  const fgColor = monochrome ? '#FFFFFF' : IVORY;
-  const frameOpacity = monochrome ? 0.25 : 0.15;
-  const glowOpacity = monochrome ? 0.1 : 0.05;
-
-  // Safe zone: Android adaptive foreground content must scale down to stay within the center 66% safe zone.
-  const contentScale = 0.72;
-
-  const element = {
-    type: 'div',
-    props: {
-      style: {
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'transparent',
-      },
-      children: {
-        type: 'div',
-        props: {
-          style: {
-            width: `${contentScale * 100}%`,
-            height: `${contentScale * 100}%`,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            border: `${Math.round(px * 0.012)}px solid rgba(250, 249, 245, ${frameOpacity})`,
-            borderRadius: `${Math.round(px * 0.18)}px`,
-            background: `rgba(250, 249, 245, ${glowOpacity})`,
-          },
-          children: {
-            type: 'div',
-            props: {
-              style: {
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '60%',
-                height: '60%',
-                borderRadius: '50%',
-                background: `rgba(250, 249, 245, ${glowOpacity})`,
-                border: `${Math.round(px * 0.002)}px solid rgba(250, 249, 245, ${glowOpacity})`,
-              },
-              children: {
-                type: 'div',
-                props: {
-                  style: {
-                    color: fgColor,
-                    fontFamily: 'Alice',
-                    fontSize: Math.round(px * 0.32),
-                    fontWeight: 400,
-                    lineHeight: 1,
-                    marginTop: -Math.round(px * 0.02),
-                  },
-                  children: 'm',
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-  };
-  return await renderPNG(element, px, px);
+  const color = monochrome ? '#FFFFFF' : BROWN;
+  return renderPNG(canvas(px, { background: 'transparent', color, scale: 0.46 }), px, px);
 }
 
 // Ensure assets/images directory exists
@@ -200,21 +92,15 @@ const write = (relPath, buf) => {
   console.log(`Wrote ${relPath} (${buf.length.toLocaleString()} bytes)`);
 };
 
-console.log('Generating premium app icon and assets...');
+console.log('Generating simple Goodreads-inspired app icon and assets...');
 
-// 1. iOS / Standard App Icon
 write('assets/images/icon.png', await generateFullIcon(1024));
-
-// 2. Android Adaptive Background
 write('assets/images/android-icon-background.png', await generateBackground(1024));
-
-// 3. Android Adaptive Foreground
 write('assets/images/android-icon-foreground.png', await generateForeground(1024));
-
-// 4. Android Adaptive Monochrome
-write('assets/images/android-icon-monochrome.png', await generateForeground(1024, { monochrome: true }));
-
-// 5. Splash Screen Emblem (Full premium tile, scaled to 512x512)
+write(
+  'assets/images/android-icon-monochrome.png',
+  await generateForeground(1024, { monochrome: true })
+);
 write('assets/images/splash-icon.png', await generateFullIcon(512));
 
-console.log('\n✓ Premium asset set generated successfully!');
+console.log('\n✓ Asset set generated successfully!');
