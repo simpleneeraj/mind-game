@@ -23,6 +23,7 @@ import {
   SpaceGrotesk_600SemiBold,
   SpaceGrotesk_700Bold,
 } from '@expo-google-fonts/space-grotesk';
+import Constants, { ExecutionEnvironment } from 'expo-constants';
 import { Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { HeroUINativeProvider } from 'heroui-native';
@@ -36,10 +37,14 @@ import {
 import '../../global.css';
 import { AppThemeProvider } from '../contexts/app-theme-context';
 
-SplashScreen.setOptions({
-  duration: 300,
-  fade: true,
-});
+// `setOptions` is a no-op in Expo Go and logs a warning there, so only
+// configure the splash animation in dev/production builds.
+if (Constants.executionEnvironment !== ExecutionEnvironment.StoreClient) {
+  SplashScreen.setOptions({
+    duration: 300,
+    fade: true,
+  });
+}
 
 /**
  * Component that wraps app content inside KeyboardProvider

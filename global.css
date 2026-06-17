@@ -15,7 +15,12 @@
       --font-medium: 'Inter-Medium';
       --font-semibold: 'Inter-SemiBold';
       --font-bold: 'Inter-Bold';
-      
+
+      /* Display font (Space Grotesk) for numbers & headings */
+      --font-display: 'SpaceGrotesk_500Medium';
+      --font-display-semibold: 'SpaceGrotesk_600SemiBold';
+      --font-display-bold: 'SpaceGrotesk_700Bold';
+
       --radius: 0.5rem;
     }
 
@@ -24,6 +29,11 @@
       --font-medium: 'Inter-Medium';
       --font-semibold: 'Inter-SemiBold';
       --font-bold: 'Inter-Bold';
+
+      /* Display font (Space Grotesk) for numbers & headings */
+      --font-display: 'SpaceGrotesk_500Medium';
+      --font-display-semibold: 'SpaceGrotesk_600SemiBold';
+      --font-display-bold: 'SpaceGrotesk_700Bold';
 
       --radius: 0.5rem;
     }

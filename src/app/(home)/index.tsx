@@ -45,7 +45,7 @@ const cards: HomeCardProps[] = [
     imageDark: HomeComponentsDark,
     count: COMPONENTS.length,
     footer: 'Explore all components',
-    path: 'components',
+    path: 'levels',
   },
   {
     title: 'Themes',
@@ -100,7 +100,7 @@ const HomeCard: FC<HomeCardProps & { index: number }> = ({
       <Card
         className={cn(
           'p-0 border border-zinc-200 shadow-none',
-          isDark && 'border-zinc-900'
+          isDark && 'border-zinc-900',
         )}
       >
         <AnimatedView
