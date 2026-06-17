@@ -23,8 +23,8 @@ const DIGIT_ROWS = [
   ['7', '8', '9'],
 ];
 
-const KEY_CLASS = 'flex-1 h-14 rounded-2xl items-center justify-center';
-const DIGIT_LABEL = 'font-mono-medium text-2xl text-default-foreground';
+const KEY_CLASS = 'flex-1 h-12 rounded-2xl items-center justify-center';
+const DIGIT_LABEL = 'font-mono-medium text-xl text-default-foreground';
 
 /** Numeric keypad: 1–9, then [hint] [0] [backspace], with a full-width ENTER. */
 const Controls: React.FC<ControlsProps> = React.memo(

@@ -29,6 +29,28 @@
       --font-mono-medium: 'JetBrainsMono_500Medium';
       --font-mono-bold: 'JetBrainsMono_700Bold';
 
+      /* Claude UI palette — light (warm ivory + clay accent) */
+      --background: oklch(0.975 0.006 91);
+      --foreground: oklch(0.27 0.006 75);
+      --surface: oklch(0.992 0.004 91);
+      --surface-foreground: oklch(0.27 0.006 75);
+      --surface-secondary: oklch(0.95 0.006 91);
+      --surface-secondary-foreground: oklch(0.27 0.006 75);
+      --surface-tertiary: oklch(0.93 0.007 90);
+      --surface-tertiary-foreground: oklch(0.27 0.006 75);
+      --overlay: oklch(0.992 0.004 91);
+      --overlay-foreground: oklch(0.27 0.006 75);
+      --muted: oklch(0.53 0.008 80);
+      --default: oklch(0.93 0.007 88);
+      --default-foreground: oklch(0.27 0.006 75);
+      --accent: oklch(0.6 0.13 41);
+      --accent-foreground: oklch(0.99 0.005 90);
+      --field-background: oklch(1 0 0);
+      --field-foreground: oklch(0.27 0.006 75);
+      --border: oklch(0.9 0.007 88);
+      --separator: oklch(0.87 0.008 88);
+      --focus: oklch(0.6 0.13 41);
+
       --radius: 0.5rem;
     }
 
@@ -50,6 +72,28 @@
       --font-mono: 'JetBrainsMono_400Regular';
       --font-mono-medium: 'JetBrainsMono_500Medium';
       --font-mono-bold: 'JetBrainsMono_700Bold';
+
+      /* Claude UI palette — dark (warm charcoal + clay accent) */
+      --background: oklch(0.255 0.004 75);
+      --foreground: oklch(0.93 0.006 88);
+      --surface: oklch(0.31 0.004 75);
+      --surface-foreground: oklch(0.93 0.006 88);
+      --surface-secondary: oklch(0.33 0.004 75);
+      --surface-secondary-foreground: oklch(0.93 0.006 88);
+      --surface-tertiary: oklch(0.36 0.004 75);
+      --surface-tertiary-foreground: oklch(0.93 0.006 88);
+      --overlay: oklch(0.31 0.004 75);
+      --overlay-foreground: oklch(0.93 0.006 88);
+      --muted: oklch(0.68 0.008 85);
+      --default: oklch(0.35 0.004 75);
+      --default-foreground: oklch(0.93 0.006 88);
+      --accent: oklch(0.68 0.13 44);
+      --accent-foreground: oklch(0.985 0.004 90);
+      --field-background: oklch(0.31 0.004 75);
+      --field-foreground: oklch(0.93 0.006 88);
+      --border: oklch(0.37 0.004 75);
+      --separator: oklch(0.42 0.004 75);
+      --focus: oklch(0.68 0.13 44);
 
       --radius: 0.5rem;
     }

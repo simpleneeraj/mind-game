@@ -1,13 +1,33 @@
+import { NavigationBar } from 'expo-navigation-bar';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import * as SystemUI from 'expo-system-ui';
 import { useThemeColor } from 'heroui-native';
-import { View } from 'react-native';
+import React from 'react';
+import { Platform, View } from 'react-native';
 import { ThemeToggle } from '../../components/theme-toggle';
 import { useAppTheme } from '../../contexts/app-theme-context';
+
+// Claude-palette window colors (hex so the native color parser is happy).
+const WINDOW_BG = { light: '#FAF9F5', dark: '#262624' } as const;
 
 export default function Layout() {
   const { isDark } = useAppTheme();
   const [foreground, background] = useThemeColor(['foreground', 'background']);
+
+  // Paint the OS window + Android nav bar to match the theme so the system
+  // bars don't show the default white/grey (especially in dark mode).
+  React.useEffect(() => {
+    const bg = isDark ? WINDOW_BG.dark : WINDOW_BG.light;
+    SystemUI.setBackgroundColorAsync(bg);
+    if (Platform.OS === 'android') {
+      try {
+        NavigationBar.setStyle(isDark ? 'light' : 'dark');
+      } catch {
+        // no-op on unsupported configurations
+      }
+    }
+  }, [isDark]);
 
   return (
     <View className="flex-1 bg-background">

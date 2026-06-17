@@ -43,15 +43,15 @@ const Equation: React.FC<{
   return (
     <View className="flex-row items-center justify-center gap-4">
       <AppText
-        maxFontSizeMultiplier={1.2}
-        className="font-mono-bold text-4xl text-default-foreground"
+        maxFontSizeMultiplier={1.1}
+        className="font-mono-bold text-3xl text-default-foreground"
       >
         {input}
       </AppText>
-      <StyledIonicons name="arrow-forward" size={22} className="text-muted" />
+      <StyledIonicons name="arrow-forward" size={20} className="text-muted" />
       <AppText
-        maxFontSizeMultiplier={1.2}
-        className={cn('font-mono-bold text-4xl', toneClass)}
+        maxFontSizeMultiplier={1.1}
+        className={cn('font-mono-bold text-3xl', toneClass)}
       >
         {output}
       </AppText>
@@ -186,17 +186,17 @@ const Game: React.FC = () => {
         style={{ flex: 1, paddingHorizontal: HORIZONTAL_PADDING }}
       >
         <View className="flex-1 gap-3 pt-3">
-          <Surface className="flex-1 justify-center gap-8 bg-surface/50">
-            <View className="items-center gap-1.5">
+          <Surface className="flex-1 justify-center gap-6 bg-surface/50">
+            <View className="items-center gap-1">
               <AppText className="text-xs uppercase tracking-widest text-accent">
                 {puzzle.title}
               </AppText>
-              <AppText className="text-base text-muted">
+              <AppText className="text-center text-sm text-muted">
                 Find the rule, solve for the missing value
               </AppText>
             </View>
 
-            <View className="gap-4">
+            <View className="gap-3">
               {puzzle.equations.map((eq, idx) => (
                 <Equation
                   key={idx}

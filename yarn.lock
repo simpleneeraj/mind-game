@@ -3740,6 +3740,13 @@ expo-modules-jsi@~56.0.10:
   resolved "https://registry.yarnpkg.com/expo-modules-jsi/-/expo-modules-jsi-56.0.10.tgz#5c660a9acc1548f0596fdaf41391904850885707"
   integrity sha512-fHZcFpYO/o62GYa6fJyAQJZcAShzhoN0iMMDzbr7vD3ewET6e1vAlTonbEakN9F0VHEgBFJ4NREy87uwVcpCuA==
 
+expo-navigation-bar@~56.0.3:
+  version "56.0.3"
+  resolved "https://registry.yarnpkg.com/expo-navigation-bar/-/expo-navigation-bar-56.0.3.tgz#ef0b91e8db6d5bf64d814936e21e5a5daf137f0d"
+  integrity sha512-7k8jyJojMs59gIsAPOFk/gCz1BTFy5S0Qf3i2uUW1f2CFoWcQSSyR4VnsmppBkzIKrBzZjcuFmdsZmYO+GZ4og==
+  dependencies:
+    debug "^4.3.2"
+
 expo-router@~56.2.7:
   version "56.2.11"
   resolved "https://registry.yarnpkg.com/expo-router/-/expo-router-56.2.11.tgz#e8899aa342bb5676157e37c9336f0b622f610551"
