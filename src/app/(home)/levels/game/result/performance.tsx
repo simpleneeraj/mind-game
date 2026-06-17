@@ -45,7 +45,7 @@ const StatsGrid: React.FC<StatsGridProps> = ({
         >
           <StyledIonicons name={stat.icon} size={22} className={stat.tint} />
           <AppText className="text-xs text-muted">{stat.label}</AppText>
-          <AppText className="font-display-semibold text-sm text-default-foreground">
+          <AppText className="font-mono-medium text-sm text-default-foreground">
             {stat.value}
           </AppText>
         </View>

@@ -3,8 +3,8 @@ import { AppText } from '@/src/components/app-text';
 import { RatingStars } from '@/src/components/levels/rating-stars';
 import SafeScreenView from '@/src/components/views/safe-screen';
 import { LEVELS_CONFIG } from '@/src/constants';
+import { TOTAL_LEVELS } from '@/src/data/puzzles';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useHeaderHeight } from 'expo-router/react-navigation';
 import { Button, Surface } from 'heroui-native';
 import LottieView from 'lottie-react-native';
 import React from 'react';
@@ -14,7 +14,6 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { scheduleOnRN } from 'react-native-worklets';
 import Confetti from './confetti';
 import StatsGrid from './performance';
@@ -26,9 +25,7 @@ const num = (value: string | undefined, fallback: number) => {
 
 const LevelComplete: React.FC = () => {
   const router = useRouter();
-  const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
-  const headerHeight = useHeaderHeight();
   const { HORIZONTAL_PADDING } = LEVELS_CONFIG;
 
   const params = useLocalSearchParams<{
@@ -81,13 +78,12 @@ const LevelComplete: React.FC = () => {
     opacity: opacity.value,
   }));
 
+  const isLastLevel = level >= TOTAL_LEVELS;
+
   return (
     <SafeScreenView
-      style={{
-        flex: 1,
-        paddingHorizontal: HORIZONTAL_PADDING,
-        paddingTop: Math.max(0, headerHeight - insets.top),
-      }}
+      edges={['top', 'bottom']}
+      style={{ flex: 1, paddingHorizontal: HORIZONTAL_PADDING }}
     >
       {stars >= 3 && <Confetti />}
 
@@ -121,7 +117,7 @@ const LevelComplete: React.FC = () => {
               />
             </View>
 
-            <AppText className="font-display-bold text-2xl text-default-foreground">
+            <AppText className="font-heading text-3xl text-default-foreground">
               {title}
             </AppText>
           </View>
@@ -156,13 +152,17 @@ const LevelComplete: React.FC = () => {
               <Button
                 variant="primary"
                 onPress={() =>
-                  router.replace(`/levels/game/${String(level + 1)}`)
+                  isLastLevel
+                    ? router.replace('/levels')
+                    : router.replace(`/levels/game/${String(level + 1)}`)
                 }
-                accessibilityLabel="Go to next level"
+                accessibilityLabel={
+                  isLastLevel ? 'Back to levels' : 'Go to next level'
+                }
                 className="h-12 rounded-2xl"
               >
                 <Button.Label className="font-display-semibold tracking-wide">
-                  Next Level
+                  {isLastLevel ? 'Finish' : 'Next Level'}
                 </Button.Label>
               </Button>
             </View>

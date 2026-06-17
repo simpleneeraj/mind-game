@@ -21,6 +21,14 @@
       --font-display-semibold: 'SpaceGrotesk_600SemiBold';
       --font-display-bold: 'SpaceGrotesk_700Bold';
 
+      /* Alice serif for the logo & headings */
+      --font-heading: 'Alice_400Regular';
+
+      /* JetBrains Mono for numeric game UI (keypad, answer, scores) */
+      --font-mono: 'JetBrainsMono_400Regular';
+      --font-mono-medium: 'JetBrainsMono_500Medium';
+      --font-mono-bold: 'JetBrainsMono_700Bold';
+
       --radius: 0.5rem;
     }
 
@@ -34,6 +42,14 @@
       --font-display: 'SpaceGrotesk_500Medium';
       --font-display-semibold: 'SpaceGrotesk_600SemiBold';
       --font-display-bold: 'SpaceGrotesk_700Bold';
+
+      /* Alice serif for the logo & headings */
+      --font-heading: 'Alice_400Regular';
+
+      /* JetBrains Mono for numeric game UI (keypad, answer, scores) */
+      --font-mono: 'JetBrainsMono_400Regular';
+      --font-mono-medium: 'JetBrainsMono_500Medium';
+      --font-mono-bold: 'JetBrainsMono_700Bold';
 
       --radius: 0.5rem;
     }

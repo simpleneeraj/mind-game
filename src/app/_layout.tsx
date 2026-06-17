@@ -1,3 +1,4 @@
+import { Alice_400Regular } from '@expo-google-fonts/alice';
 import {
   Inter_400Regular,
   Inter_500Medium,
@@ -5,6 +6,11 @@ import {
   Inter_700Bold,
   useFonts,
 } from '@expo-google-fonts/inter';
+import {
+  JetBrainsMono_400Regular,
+  JetBrainsMono_500Medium,
+  JetBrainsMono_700Bold,
+} from '@expo-google-fonts/jetbrains-mono';
 import {
   Saira_400Regular,
   Saira_500Medium,
@@ -104,6 +110,10 @@ export default function Layout() {
     SNPro_500Medium,
     SNPro_600SemiBold,
     SNPro_700Bold,
+    Alice_400Regular,
+    JetBrainsMono_400Regular,
+    JetBrainsMono_500Medium,
+    JetBrainsMono_700Bold,
   });
 
   if (!fonts) {

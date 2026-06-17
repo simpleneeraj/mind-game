@@ -1,4 +1,3 @@
-import { AppText } from '@/src/components/app-text';
 import SolarLightbulbBoldDuotoneIcon from '@/src/components/icons/SolarLightbulbBoldDuotoneIcon';
 import { Ionicons } from '@expo/vector-icons';
 import { Button, cn } from 'heroui-native';
@@ -10,9 +9,9 @@ const StyledIonicons = withUniwind(Ionicons);
 
 type ControlsProps = {
   value?: string;
+  disabled?: boolean;
   onPressNumber?: (digit: string) => void;
   onBackspace?: () => void;
-  onClear?: () => void;
   onSubmit?: () => void;
   onHint?: () => void;
   hintUsed?: boolean;
@@ -25,74 +24,42 @@ const DIGIT_ROWS = [
 ];
 
 const KEY_CLASS = 'flex-1 h-14 rounded-2xl items-center justify-center';
+const DIGIT_LABEL = 'font-mono-medium text-2xl text-default-foreground';
 
-/**
- * Answer display tile + numeric keypad.
- * Rows: 1-9, then [hint] [0] [backspace], with a full-width ENTER below.
- */
+/** Numeric keypad: 1–9, then [hint] [0] [backspace], with a full-width ENTER. */
 const Controls: React.FC<ControlsProps> = React.memo(
   ({
     value = '',
+    disabled = false,
     onPressNumber,
     onBackspace,
-    onClear,
     onSubmit,
     onHint,
     hintUsed = false,
   }) => {
     return (
       <View className="w-full gap-2">
-        {/* Answer display */}
-        <View className="h-16 flex-row items-center justify-between rounded-2xl bg-default px-5">
-          <AppText className="text-sm text-muted">Your answer</AppText>
-          <View className="flex-row items-center gap-3">
-            <AppText
-              maxFontSizeMultiplier={1.2}
-              className={cn(
-                'font-display-bold text-3xl',
-                value ? 'text-default-foreground' : 'text-default-foreground/30'
-              )}
-            >
-              {value || '—'}
-            </AppText>
-            {!!value && (
-              <Button
-                isIconOnly
-                size="sm"
-                variant="ghost"
-                onPress={onClear}
-                className="rounded-full"
-              >
-                <StyledIonicons name="close" size={16} className="text-muted" />
-              </Button>
-            )}
-          </View>
-        </View>
-
-        {/* Digit rows */}
         {DIGIT_ROWS.map((row) => (
           <View key={row.join('')} className="flex-row gap-2">
             {row.map((digit) => (
               <Button
                 key={digit}
                 variant="tertiary"
+                isDisabled={disabled}
                 onPress={() => onPressNumber?.(digit)}
                 className={KEY_CLASS}
               >
-                <Button.Label className="font-display-semibold text-2xl text-default-foreground">
-                  {digit}
-                </Button.Label>
+                <Button.Label className={DIGIT_LABEL}>{digit}</Button.Label>
               </Button>
             ))}
           </View>
         ))}
 
-        {/* Hint · 0 · Backspace */}
         <View className="flex-row gap-2">
           <Button
             variant="tertiary"
             onPress={onHint}
-            isDisabled={hintUsed}
+            isDisabled={hintUsed || disabled}
             className={KEY_CLASS}
           >
             <SolarLightbulbBoldDuotoneIcon
@@ -104,15 +71,15 @@ const Controls: React.FC<ControlsProps> = React.memo(
           </Button>
           <Button
             variant="tertiary"
+            isDisabled={disabled}
             onPress={() => onPressNumber?.('0')}
             className={KEY_CLASS}
           >
-            <Button.Label className="font-display-semibold text-2xl text-default-foreground">
-              0
-            </Button.Label>
+            <Button.Label className={DIGIT_LABEL}>0</Button.Label>
           </Button>
           <Button
             variant="tertiary"
+            isDisabled={disabled}
             onPress={onBackspace}
             className={KEY_CLASS}
           >
@@ -124,11 +91,10 @@ const Controls: React.FC<ControlsProps> = React.memo(
           </Button>
         </View>
 
-        {/* Submit */}
         <Button
           variant="primary"
           onPress={onSubmit}
-          isDisabled={!value}
+          isDisabled={!value || disabled}
           className="h-14 rounded-2xl"
         >
           <Button.Label className="font-display-semibold tracking-wider">

@@ -40,7 +40,7 @@ export const LevelItem: React.FC<LevelItemProps> = React.memo(
               <AppText
                 maxFontSizeMultiplier={1.3}
                 className={cn(
-                  'font-display-bold text-2xl',
+                  'font-mono-bold text-2xl',
                   current ? 'text-accent' : 'text-default-foreground'
                 )}
               >

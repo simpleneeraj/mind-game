@@ -5,6 +5,14 @@
       --font-medium: 'SpaceGrotesk-Medium';
       --font-semibold: 'SpaceGrotesk-SemiBold';
       --font-bold: 'SpaceGrotesk-Bold';
+
+      --font-display: 'SpaceGrotesk_500Medium';
+      --font-display-semibold: 'SpaceGrotesk_600SemiBold';
+      --font-display-bold: 'SpaceGrotesk_700Bold';
+      --font-heading: 'Alice_400Regular';
+      --font-mono: 'JetBrainsMono_400Regular';
+      --font-mono-medium: 'JetBrainsMono_500Medium';
+      --font-mono-bold: 'JetBrainsMono_700Bold';
       
       --radius: 0.1rem;
 
@@ -79,6 +87,14 @@
       --font-medium: 'SpaceGrotesk-Medium';
       --font-semibold: 'SpaceGrotesk-SemiBold';
       --font-bold: 'SpaceGrotesk-Bold';
+
+      --font-display: 'SpaceGrotesk_500Medium';
+      --font-display-semibold: 'SpaceGrotesk_600SemiBold';
+      --font-display-bold: 'SpaceGrotesk_700Bold';
+      --font-heading: 'Alice_400Regular';
+      --font-mono: 'JetBrainsMono_400Regular';
+      --font-mono-medium: 'JetBrainsMono_500Medium';
+      --font-mono-bold: 'JetBrainsMono_700Bold';
 
       --radius: 0.1rem;
 

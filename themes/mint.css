@@ -6,6 +6,14 @@
       --font-semibold: 'Saira-SemiBold';
       --font-bold: 'Saira-Bold';
 
+      --font-display: 'SpaceGrotesk_500Medium';
+      --font-display-semibold: 'SpaceGrotesk_600SemiBold';
+      --font-display-bold: 'SpaceGrotesk_700Bold';
+      --font-heading: 'Alice_400Regular';
+      --font-mono: 'JetBrainsMono_400Regular';
+      --font-mono-medium: 'JetBrainsMono_500Medium';
+      --font-mono-bold: 'JetBrainsMono_700Bold';
+
       --radius: 0.25rem;
       
       /* Base Colors - Fresh, energizing mint */
@@ -79,6 +87,14 @@
       --font-medium: 'Saira-Medium';
       --font-semibold: 'Saira-SemiBold';
       --font-bold: 'Saira-Bold';
+
+      --font-display: 'SpaceGrotesk_500Medium';
+      --font-display-semibold: 'SpaceGrotesk_600SemiBold';
+      --font-display-bold: 'SpaceGrotesk_700Bold';
+      --font-heading: 'Alice_400Regular';
+      --font-mono: 'JetBrainsMono_400Regular';
+      --font-mono-medium: 'JetBrainsMono_500Medium';
+      --font-mono-bold: 'JetBrainsMono_700Bold';
 
       --radius: 0.25rem;
 
