@@ -1,6 +1,13 @@
 {
-  "name": "heroui-native-example",
-  "version": "v1.0.0",
+  "name": "mind-puzzle",
+  "version": "1.0.0",
+  "description": "A pattern-puzzle mobile game built with React Native (Expo) and HeroUI Native.",
+  "license": "MIT",
+  "author": "simpleneeraj",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/simpleneeraj/mind-game.git"
+  },
   "main": "expo-router/entry",
   "scripts": {
     "start": "expo start -c",
